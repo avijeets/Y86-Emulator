@@ -103,14 +103,66 @@ void mrmovl() {
  * can be addition, subtraction, multiplication
  * bitwise and or exclusive or */
  void op1() {
+     ZF = 0; SF = 0; OF = 0;
      eip++;
      bitfield *new = (bitfield *)(emem + eip);
      int lower, higher;
      higher = new->high;
      lower = new->low;
+     int topReg = 0, botReg = 0;
+     int count = 0, minus = 0;
+     switch (higher) {
+         case 0:
+             if ((lower >= 0 && lower <= 7) && (higher >= 0 && higher <= 7)) {
+                 topReg = reg[higher]; // value of higher register
+                 botReg = reg[lower]; // value of lower register
+                 count = topReg + botReg;
+                 reg[higher] = count;
+                 if (count == 0)
+                     ZF = 1; // otherwise don't change
+                 if ((botReg < 0 && topReg < 0 && count > 0) || (botReg > 0 && topReg > 0 && count < 0))
+                     OF = 1; // otherwise don't change
+                 if (count < 0)
+                     SF = 1; // otherwise don't change
+                 
+                 eip++;
 
-
-
+             }
+             else {
+                 fprintf(stderr,"Not valid register.\n");
+                 exit(0);
+                 break;
+             }
+             break;
+         case 1:
+             if ((lower >= 0 && lower <= 7) && (higher >= 0 && higher <= 7)) {
+                 topReg = reg[higher]; // value of higher register
+                 botReg = reg[lower]; // value of lower register
+                 minus = topReg - botReg;
+                 reg[higher] = minus;
+                 if (minus == 0)
+                     ZF = 1;
+                 if ((botReg < 0 && topReg < 0 && minus > 0) || (botReg > 0 && topReg > 0 && minus < 0))
+                     OF = 1;
+                 if(minus < 0)
+                     SF = 1;
+             }
+             break;
+         case 2:
+             //
+             break;
+         case 3:
+             //
+             break;
+         case 4:
+             //
+             break;
+             
+         default:
+             fprintf(stderr,"Not valid register.\n");
+             exit(0);
+             break;
+     }
 	return;
  }
  
