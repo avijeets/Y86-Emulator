@@ -110,7 +110,7 @@ void mrmovl() {
      higher = new->high;
      lower = new->low;
      int topReg = 0, botReg = 0;
-     int count = 0, minus = 0;
+     int count = 0, minus = 0, mod = 0, xor = 0, mul = 0;
      switch (higher) {
          case 0:
              if ((lower >= 0 && lower <= 7) && (higher >= 0 && higher <= 7)) {
@@ -146,20 +146,77 @@ void mrmovl() {
                      OF = 1;
                  if(minus < 0)
                      SF = 1;
+                 eip++;
+             }
+             else {
+                 fprintf(stderr,"Not valid register.\n");
+                 exit(0);
+                 break;
              }
              break;
          case 2:
-             //
+             if ((lower >= 0 && lower <= 7) && (higher >= 0 && higher <= 7)) {
+                 topReg = reg[higher]; // value of higher register
+                 botReg = reg[lower]; // value of lower register
+                 mod = topReg & botReg;
+                 reg[higher] = mod;
+                 if (mod == 0)
+                     ZF = 1;
+                 if ((botReg < 0 && topReg < 0 && mod > 0) || (botReg > 0 && topReg > 0 && mod < 0))
+                     OF = 1;
+                 if (mod < 0)
+                     SF = 1;
+                 eip++;
+             }
+             else {
+                 fprintf(stderr,"Not valid register.\n");
+                 exit(0);
+                 break;
+             }
              break;
          case 3:
-             //
+             if ((lower >= 0 && lower <= 7) && (higher >= 0 && higher <= 7)) {
+                 topReg = reg[higher]; // value of higher register
+                 botReg = reg[lower]; // value of lower register
+                 xor = topReg & botReg;
+                 reg[higher] = xor;
+                 if (xor == 0)
+                     ZF = 1;
+                 if ((botReg < 0 && topReg < 0 && xor > 0) || (botReg > 0 && topReg > 0 && xor < 0))
+                     OF = 1;
+                 if (xor < 0)
+                     SF = 1;
+                 eip++;
+             }
+             else {
+                 fprintf(stderr,"Not valid register.\n");
+                 exit(0);
+                 break;
+             }
              break;
          case 4:
-             //
+             if ((lower >= 0 && lower <= 7) && (higher >= 0 && higher <= 7)) {
+                 topReg = reg[higher]; // value of higher register
+                 botReg = reg[lower]; // value of lower register
+                 mul = topReg & botReg;
+                 reg[higher] = mul;
+                 if (mul == 0)
+                     ZF = 1;
+                 if ((botReg < 0 && topReg < 0 && mul > 0) || (botReg > 0 && topReg > 0 && mul < 0))
+                     OF = 1;
+                 if (mul < 0)
+                     SF = 1;
+                 eip++;
+             }
+             else {
+                 fprintf(stderr,"Not valid register.\n");
+                 exit(0);
+                 break;
+             }
              break;
              
          default:
-             fprintf(stderr,"Not valid register.\n");
+             fprintf(stderr,"Not valid operation.\n");
              exit(0);
              break;
      }
