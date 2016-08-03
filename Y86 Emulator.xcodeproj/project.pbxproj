@@ -1,0 +1,252 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		8AFF77DF1D494F5F00333B5F /* y86emul.c in Sources */ = {isa = PBXBuildFile; fileRef = 8AFF77DD1D494F5F00333B5F /* y86emul.c */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		8AFF77CF1D494F4F00333B5F /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		8AFF77D11D494F4F00333B5F /* Y86 Emulator */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Y86 Emulator"; sourceTree = BUILT_PRODUCTS_DIR; };
+		8AFF77DB1D494F5F00333B5F /* prog1.y86 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = prog1.y86; sourceTree = "<group>"; };
+		8AFF77DC1D494F5F00333B5F /* prog2.y86 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = prog2.y86; sourceTree = "<group>"; };
+		8AFF77DD1D494F5F00333B5F /* y86emul.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = y86emul.c; sourceTree = "<group>"; };
+		8AFF77DE1D494F5F00333B5F /* y86emul.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = y86emul.h; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		8AFF77CE1D494F4F00333B5F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		8AFF77C81D494F4F00333B5F = {
+			isa = PBXGroup;
+			children = (
+				8AFF77D31D494F4F00333B5F /* Y86 Emulator */,
+				8AFF77D21D494F4F00333B5F /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		8AFF77D21D494F4F00333B5F /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8AFF77D11D494F4F00333B5F /* Y86 Emulator */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		8AFF77D31D494F4F00333B5F /* Y86 Emulator */ = {
+			isa = PBXGroup;
+			children = (
+				8AFF77DB1D494F5F00333B5F /* prog1.y86 */,
+				8AFF77DC1D494F5F00333B5F /* prog2.y86 */,
+				8AFF77DD1D494F5F00333B5F /* y86emul.c */,
+				8AFF77DE1D494F5F00333B5F /* y86emul.h */,
+			);
+			path = "Y86 Emulator";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		8AFF77D01D494F4F00333B5F /* Y86 Emulator */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8AFF77D81D494F4F00333B5F /* Build configuration list for PBXNativeTarget "Y86 Emulator" */;
+			buildPhases = (
+				8AFF77CD1D494F4F00333B5F /* Sources */,
+				8AFF77CE1D494F4F00333B5F /* Frameworks */,
+				8AFF77CF1D494F4F00333B5F /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Y86 Emulator";
+			productName = "Y86 Emulator";
+			productReference = 8AFF77D11D494F4F00333B5F /* Y86 Emulator */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		8AFF77C91D494F4F00333B5F /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0730;
+				ORGANIZATIONNAME = "Avijeet Sachdev";
+				TargetAttributes = {
+					8AFF77D01D494F4F00333B5F = {
+						CreatedOnToolsVersion = 7.3.1;
+					};
+				};
+			};
+			buildConfigurationList = 8AFF77CC1D494F4F00333B5F /* Build configuration list for PBXProject "Y86 Emulator" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 8AFF77C81D494F4F00333B5F;
+			productRefGroup = 8AFF77D21D494F4F00333B5F /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				8AFF77D01D494F4F00333B5F /* Y86 Emulator */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		8AFF77CD1D494F4F00333B5F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8AFF77DF1D494F5F00333B5F /* y86emul.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		8AFF77D61D494F4F00333B5F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		8AFF77D71D494F4F00333B5F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		8AFF77D91D494F4F00333B5F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		8AFF77DA1D494F4F00333B5F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		8AFF77CC1D494F4F00333B5F /* Build configuration list for PBXProject "Y86 Emulator" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8AFF77D61D494F4F00333B5F /* Debug */,
+				8AFF77D71D494F4F00333B5F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		8AFF77D81D494F4F00333B5F /* Build configuration list for PBXNativeTarget "Y86 Emulator" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8AFF77D91D494F4F00333B5F /* Debug */,
+				8AFF77DA1D494F4F00333B5F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 8AFF77C91D494F4F00333B5F /* Project object */;
+}
