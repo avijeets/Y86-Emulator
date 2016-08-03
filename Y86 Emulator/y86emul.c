@@ -227,46 +227,108 @@ void mrmovl() {
   * on which jump is declared and what flags
   * are on/off.*/
 void jXX(){
-	/**** fill your code here ****/
-
-
-
-	return;
+    //ZF = 0, SF = 0, OF = 0;
+    bitfield *new = (bitfield *)(emem + eip);
+    int *num = (int *)(emem + eip + 1);
+    int lower, higher;
+    higher = new->high;
+    lower = new->low;
+    //printf("%x\n", higher);
+    switch (higher) {
+        case 0:
+            eip = *num;
+            break;
+        case 1:
+            if (((SF ^ OF) | ZF) == 1)
+                eip = *num;
+            else
+                eip += 5;
+            break;
+        case 2:
+            if ((SF ^ OF) == 1)
+                eip = *num;
+            else
+                eip += 5;
+            break;
+        case 3:
+            if (ZF == 0)
+                eip = *num;
+            else
+                eip += 5;
+            break;
+        case 4:
+            if (ZF == 1)
+                eip = *num;
+            else
+                eip += 5;
+        case 5:
+            if ((SF ^ OF) == 0)
+                eip = *num;
+            else
+                eip += 5;
+        case 6:
+            if (((SF ^ OF) & ZF) == 0)
+                eip = *num;
+            else
+                eip += 5;
+        default:
+            fprintf(stderr,"Not valid operation.\n");
+            exit(0);
+            break;
+            
+    }
+    
+    /*
+        FINISH THE REST,
+        DEBUG,
+        COMMENT AND README,
+        DO EXTRA CREDIT
+     */
+    return;
 }
 
 /* Calls the function at the destination*/
 void call() {
-	/**** fill your code here ****/
-
-
-
+    eip++;
+    int *num = (int *)(emem + eip);
+    reg[4] -= 4;
+    reg [4] = eip + 5;
+    
+    eip = *num;
 	return;
 }
 
 /*returns from a function call*/
 void ret() {
-	/**** fill your code here ****/
-
-
-
+    int *num = (int *)(emem + reg[4]);
+    reg[4] += 4;
+    eip = *num;
 	return;
 }
 
 /*Pushes onto the top of the stack*/
 void pushl() {
-	/**** fill your code here ****/
-
-
-
+    bitfield *new = (bitfield *)(emem + 1);
+    int lower, higher;
+    higher = new->high;
+    lower = new->low;
+    
+    reg[4] -= 4;
+    *(int *)(emem + reg[4]) = reg[lower];
+    eip++;
 	return;
 }
 
 /*pop off the top of the stack*/
 void popl() {
-	/**** fill your code here ****/
-
-
-
+    bitfield *new = (bitfield *)(emem + 1);
+    int lower, higher;
+    higher = new->high;
+    lower = new->low;
+    
+    reg[lower] = *(int *)(emem + reg[4]);
+    reg[4] += 4;
+    eip++;
 	return;	
 }
 
@@ -296,6 +358,7 @@ void readB() {
 }
 
 /*Reads in long*/
+//MARK: READ METHOD
 void readL() {
 	/**** fill in your code here ****/
 
@@ -323,6 +386,7 @@ void writeB() {
 }
 
 /*Writes a long to terminal*/
+//MARK: WRITE METHOD
 void writeL() {
 	/****fill your code here****/
 
