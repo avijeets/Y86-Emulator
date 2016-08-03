@@ -104,14 +104,14 @@ void mrmovl() {
  * bitwise and or exclusive or */
  void op1() {
      ZF = 0; SF = 0; OF = 0;
-     eip++;
      bitfield *new = (bitfield *)(emem + eip);
+     bitfield *expRegister = (bitfield *)(emem + eip + 1); // need next byte bitfield too
      int lower, higher;
-     higher = new->high;
-     lower = new->low;
+     higher = expRegister->high;
+     lower = expRegister->low;
      int topReg = 0, botReg = 0;
      int count = 0, minus = 0, mod = 0, xor = 0, mul = 0;
-     switch (higher) {
+     switch (new->high) {
          case 0:
              if ((lower >= 0 && lower <= 7) && (higher >= 0 && higher <= 7)) {
                  topReg = reg[higher]; // value of higher register
@@ -125,15 +125,14 @@ void mrmovl() {
                  if (count < 0)
                      SF = 1; // otherwise don't change
                  
-                 eip++;
-
+                 eip += 2;
+                 break;
              }
              else {
                  fprintf(stderr,"Not valid register.\n");
                  exit(0);
                  break;
              }
-             break;
          case 1:
              if ((lower >= 0 && lower <= 7) && (higher >= 0 && higher <= 7)) {
                  topReg = reg[higher]; // value of higher register
@@ -142,18 +141,18 @@ void mrmovl() {
                  reg[higher] = minus;
                  if (minus == 0)
                      ZF = 1;
-                 if ((botReg < 0 && topReg < 0 && minus > 0) || (botReg > 0 && topReg > 0 && minus < 0))
+                 if ((botReg > 0 && topReg < 0 && minus > 0) || (botReg < 0 && topReg > 0 && minus < 0))
                      OF = 1;
                  if(minus < 0)
                      SF = 1;
-                 eip++;
+                 eip += 2;
+                 break;
              }
              else {
                  fprintf(stderr,"Not valid register.\n");
                  exit(0);
                  break;
              }
-             break;
          case 2:
              if ((lower >= 0 && lower <= 7) && (higher >= 0 && higher <= 7)) {
                  topReg = reg[higher]; // value of higher register
@@ -162,18 +161,16 @@ void mrmovl() {
                  reg[higher] = mod;
                  if (mod == 0)
                      ZF = 1;
-                 if ((botReg < 0 && topReg < 0 && mod > 0) || (botReg > 0 && topReg > 0 && mod < 0))
-                     OF = 1;
                  if (mod < 0)
                      SF = 1;
-                 eip++;
+                 eip += 2;
+                 break;
              }
              else {
                  fprintf(stderr,"Not valid register.\n");
                  exit(0);
                  break;
              }
-             break;
          case 3:
              if ((lower >= 0 && lower <= 7) && (higher >= 0 && higher <= 7)) {
                  topReg = reg[higher]; // value of higher register
@@ -182,41 +179,39 @@ void mrmovl() {
                  reg[higher] = xor;
                  if (xor == 0)
                      ZF = 1;
-                 if ((botReg < 0 && topReg < 0 && xor > 0) || (botReg > 0 && topReg > 0 && xor < 0))
-                     OF = 1;
                  if (xor < 0)
                      SF = 1;
-                 eip++;
+                 eip += 2;
+                 break;
              }
              else {
                  fprintf(stderr,"Not valid register.\n");
                  exit(0);
                  break;
              }
-             break;
          case 4:
              if ((lower >= 0 && lower <= 7) && (higher >= 0 && higher <= 7)) {
                  topReg = reg[higher]; // value of higher register
                  botReg = reg[lower]; // value of lower register
-                 mul = topReg & botReg;
+                 mul = topReg * botReg;
                  reg[higher] = mul;
                  if (mul == 0)
                      ZF = 1;
-                 if ((botReg < 0 && topReg < 0 && mul > 0) || (botReg > 0 && topReg > 0 && mul < 0))
+                 if ((botReg < 0 && topReg < 0 && mul < 0) || (botReg > 0 && topReg > 0 && mul < 0) ||
+                     (botReg < 0 && topReg > 0 && mul > 0) || (botReg > 0 && topReg < 0 && mul > 0))
                      OF = 1;
                  if (mul < 0)
                      SF = 1;
-                 eip++;
+                 eip += 2;
+                 break;
              }
              else {
                  fprintf(stderr,"Not valid register.\n");
                  exit(0);
                  break;
              }
-             break;
-             
          default:
-             fprintf(stderr,"Not valid operation.\n");
+             fprintf(stderr,"Not valid operation2.\n");
              exit(0);
              break;
      }
@@ -233,13 +228,12 @@ void jXX(){
     int lower, higher;
     higher = new->high;
     lower = new->low;
-    //printf("%x\n", higher);
     switch (higher) {
         case 0:
             eip = *num;
             break;
         case 1:
-            if (((SF ^ OF) | ZF) == 1)
+            if (((SF ^ OF) || ZF) == 1)
                 eip = *num;
             else
                 eip += 5;
@@ -251,26 +245,29 @@ void jXX(){
                 eip += 5;
             break;
         case 3:
-            if (ZF == 0)
+            if (ZF == 1)
                 eip = *num;
             else
                 eip += 5;
             break;
         case 4:
-            if (ZF == 1)
+            if (ZF == 0)
                 eip = *num;
             else
                 eip += 5;
+            break;
         case 5:
             if ((SF ^ OF) == 0)
                 eip = *num;
             else
                 eip += 5;
+            break;
         case 6:
             if (((SF ^ OF) & ZF) == 0)
                 eip = *num;
             else
                 eip += 5;
+            break;
         default:
             fprintf(stderr,"Not valid operation.\n");
             exit(0);
@@ -292,7 +289,7 @@ void call() {
     eip++;
     int *num = (int *)(emem + eip);
     reg[4] -= 4;
-    reg [4] = eip + 5;
+    *(int*)(emem +reg [4] )= (eip + 4);
     
     eip = *num;
 	return;
@@ -308,27 +305,27 @@ void ret() {
 
 /*Pushes onto the top of the stack*/
 void pushl() {
-    bitfield *new = (bitfield *)(emem + 1);
+    bitfield *new = (bitfield *)(emem + eip + 1);
     int lower, higher;
     higher = new->high;
     lower = new->low;
     
     reg[4] -= 4;
     *(int *)(emem + reg[4]) = reg[lower];
-    eip++;
+    eip+=2;
 	return;
 }
 
 /*pop off the top of the stack*/
 void popl() {
-    bitfield *new = (bitfield *)(emem + 1);
+    bitfield *new = (bitfield *)(emem + eip + 1);
     int lower, higher;
     higher = new->high;
     lower = new->low;
     
     reg[lower] = *(int *)(emem + reg[4]);
     reg[4] += 4;
-    eip++;
+    eip+=2;
 	return;	
 }
 
@@ -360,11 +357,27 @@ void readB() {
 /*Reads in long*/
 //MARK: READ METHOD
 void readL() {
-	/**** fill in your code here ****/
-
-
-
-	return;
+    eip++;
+    bitfield* tempByte = (bitfield*)(emem+eip);//get the first byte
+    int* num = (int*)(emem + eip + 1);//get the displacement by type casting the pointer to (int*) so that the computer would interpret the next 4 bytes as an integer
+    int input;
+    OF = 0;
+    SF = 0;
+    if (scanf("%i",&input) == EOF) {
+        ZF = 1;	//set ZF = 1 when end of file symbol is read in
+    }
+    else {
+        ZF = 0;
+        if ((tempByte -> low >= 0 && tempByte -> low <= 7) && (tempByte -> high == 15)) {//if the first half of byte1 is 0~7(which is a valid register), and the second half of byte2 is 'F', it is considered as a valid readB instruction
+            *(int *)(emem + reg[tempByte -> low] + *num) = input;
+        }
+        else {
+            fprintf(stderr,"Read error.\n");
+            exit(0);
+        }
+    }
+    eip+=5; //eip should be incremented by 5 to point to the start of next instruction
+    return;
 }
 
 /*Writes a char to terminal*/
@@ -388,11 +401,20 @@ void writeB() {
 /*Writes a long to terminal*/
 //MARK: WRITE METHOD
 void writeL() {
-	/****fill your code here****/
-
-
-
-	return;
+    eip++; //go to byte1
+    bitfield* tempByte = (bitfield*)(emem+eip); //get byte1
+    int* num = (int*)(emem + eip + 1); //get byte2-5 and interpret it as integer
+    int charCurrByte;
+    if ((tempByte -> high == 15) && (tempByte -> low >= 0 && tempByte -> low <= 7)) { //check if byte1 is valid
+        charCurrByte = *(int *)(emem + reg[tempByte -> low] + *num); //set charCurrByte to be the character prepared to be printed out
+    }
+    else {
+        fprintf(stderr,"Write error.\n");
+        exit(0);
+    }
+    printf("%i",charCurrByte);
+    eip+=5; //increment eip by 5 to point to the next location
+    return;
 }
 
 /*Will scan the instrunction string
@@ -402,6 +424,7 @@ void runProgram() {
 	bitfield* tempByte;
 	while (CPUState == AOK) {
 		tempByte = (bitfield*)(emem+eip);
+       // printf("Instruction : %x%x\n", tempByte->low, tempByte->high);
 		if (tempByte -> low == 0) {					//nope code
 			if (tempByte -> high == 0) {
 				eip++;
