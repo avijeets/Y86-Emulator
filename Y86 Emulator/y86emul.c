@@ -24,7 +24,6 @@ void rrmovl() {
         exit(0);
     }
     eip++;
-    //printf("rrmovl reg[%x], reg[%x] , new->low, new->high");
 	return;
 }
 
