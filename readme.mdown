@@ -11,4 +11,4 @@
 	- Congratulations.  
 	You have made it this far.  This first program was all of 10 Y86 machine instructions, which I apparently did not screw up. 
 	Susan sends her best wishes to you all.
-- The provided prog2.y86 will serve as a factorial calculator that can print factorials up to 12! because 231 < 13!
+- The provided prog2.y86 will serve as a factorial calculator that can print factorials up to 12! because 2<sup>31</sup> < 13!
